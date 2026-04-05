@@ -1,16 +1,9 @@
-name: CI-CD Pipeline
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend   # <<< Add this
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,6 +30,9 @@ jobs:
   deploy:
     runs-on: self-hosted
     needs: test
+    defaults:
+      run:
+        working-directory: backend   # <<< Add this
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
