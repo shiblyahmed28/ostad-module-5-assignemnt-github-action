@@ -1,8 +1,4 @@
-- name: CI-CD Pipeline Upload test results
-  uses: actions/upload-artifact@v4
-  with:
-    name: test-results
-    path: test-results/results.txt
+name: CI-CD Pipeline
 
 on:
   push:
@@ -33,7 +29,7 @@ jobs:
           npm test > test-results/results.txt || true
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: test-results/results.txt
@@ -46,7 +42,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download test results
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: test-results
           path: test-results
