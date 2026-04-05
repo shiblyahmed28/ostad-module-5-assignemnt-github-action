@@ -1,10 +1,15 @@
-require('dotenv').config();
-const express=require('express');
-const bodyParser=require('body-parser');
-const cors=require('cors');
-const routes=require('./routes');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const app=express();
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import routes from './routes.js';   // ⚠️ must add .js extension
+
+const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -20,7 +25,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-// Health check endpoint
+// Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', environment: NODE_ENV });
 });
@@ -28,7 +33,7 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/api', routes);
 
-// 404 handler
+// 404
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
